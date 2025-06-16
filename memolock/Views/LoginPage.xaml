@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="memolock.Views.LoginPage"
+             xmlns:viewmodel="clr-namespace:memolock.ViewModels"
+             x:DataType="viewmodel:LoginViewModel"
+             Title="잠금 해제"
+             Shell.NavBarIsVisible="False">
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Label Text="memolock" FontSize="40" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <Label Text="앱이 잠겨 있습니다." HorizontalOptions="Center" Margin="0,0,0,30"/>
+
+        <!-- 비밀번호 입력 UI -->
+        <VerticalStackLayout Spacing="15" IsVisible="{Binding IsPasswordMode}">
+            <Entry Placeholder="비밀번호" IsPassword="True" Text="{Binding Password}" />
+            <Button Text="잠금 해제" Command="{Binding LoginCommand}" />
+        </VerticalStackLayout>
+
+        <!-- 생체인증/패턴 UI -->
+        <VerticalStackLayout Spacing="25" IsVisible="{Binding IsBiometricMode}" HorizontalOptions="Center">
+            <Image Source="fingerprint.png" WidthRequest="80" HeightRequest="80" />
+            <Button Text="생체인증으로 잠금해제" Command="{Binding BiometricLoginCommand}" />
+        </VerticalStackLayout>
+
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" HorizontalOptions="Center" IsVisible="{Binding HasError}"/>
+
+        <!-- 다른 잠금 방식으로 전환 -->
+        <Label Text="비밀번호를 사용하여 보안 해제"
+                   TextColor="Gray"
+                   TextDecorations="Underline"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding IsBiometricMode}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SwitchToPasswordModeCommand}"/>
+            </Label.GestureRecognizers>
+        </Label>
+    </VerticalStackLayout>
+</ContentPage>
+    

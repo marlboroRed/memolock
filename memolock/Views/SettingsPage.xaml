@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="memolock.Views.SettingsPage"
+                 Title="설정">
+    <VerticalStackLayout Spacing="10" Padding="20">
+        <Label Text="앱 설정" FontSize="24" FontAttributes="Bold"/>
+
+        <Button Text="앱 공통 비밀번호 재설정" />
+
+        <Frame Padding="10" Margin="0,20">
+            <VerticalStackLayout>
+                <Label Text="화면 모드" />
+                <Picker Title="모드 선택">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>라이트 모드</x:String>
+                            <x:String>다크 모드</x:String>
+                            <x:String>시스템 설정 따르기</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button Text="숨긴 메모 보기" />
+    </VerticalStackLayout>
+</ContentPage>
+    

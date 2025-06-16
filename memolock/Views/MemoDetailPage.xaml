@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="memolock.Views.MemoDetailPage"
+                 xmlns:viewmodel="clr-namespace:memolock.ViewModels"
+                 x:DataType="viewmodel:MemoDetailViewModel"
+                 Title="{Binding Memo.Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="설정" Command="{Binding SettingsCommand}"/>
+        <ToolbarItem Text="공유" Command="{Binding ShareCommand}"/>
+        <ToolbarItem Text="편집" Command="{Binding EditCommand}"/>
+        <ToolbarItem Text="삭제" Command="{Binding DeleteCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="{Binding Memo.Title}" FontSize="28" FontAttributes="Bold" />
+            <Label Text="{Binding Memo.ModifiedDate, StringFormat='{0:yyyy.MM.dd HH:mm} 수정됨'}" FontSize="12" TextColor="Gray"/>
+            <BoxView HeightRequest="1" Color="LightGray" />
+            <Label Text="{Binding Memo.Content}" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+    

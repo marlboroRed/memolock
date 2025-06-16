@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="memolock.Views.SecuritySetupPage"
+                 xmlns:viewmodel="clr-namespace:memolock.ViewModels"
+                 x:DataType="viewmodel:SecuritySetupViewModel"
+                 Title="보안 설정"
+                 Shell.NavBarIsVisible="False">
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Label Text="memolock 시작하기" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" />
+        <Label Text="앱을 보호할 비밀번호를 설정하세요." HorizontalOptions="Center" />
+
+        <Entry Placeholder="비밀번호 입력" IsPassword="True" Text="{Binding Password}" />
+        <Entry Placeholder="비밀번호 확인" IsPassword="True" Text="{Binding ConfirmPassword}" />
+
+        <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" />
+
+        <Button Text="설정 완료" Command="{Binding CompleteSetupCommand}" HorizontalOptions="Fill" />
+    </VerticalStackLayout>
+</ContentPage>
+    

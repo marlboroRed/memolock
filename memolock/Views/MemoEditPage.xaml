@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="memolock.Views.MemoEditPage"
+                 xmlns:viewmodel="clr-namespace:memolock.ViewModels"
+                 x:DataType="viewmodel:MemoEditViewModel"
+                 Title="메모 작성">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="저장" Command="{Binding SaveMemoCommand}" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="15">
+            <Entry Placeholder="제목" Text="{Binding Memo.Title}" FontSize="Large"/>
+            <Editor Placeholder="내용" Text="{Binding Memo.Content}" AutoSize="TextChanges" VerticalOptions="FillAndExpand" HeightRequest="300" />
+
+            <Frame Padding="10" BorderColor="LightGray" CornerRadius="10">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="비밀번호 설정" VerticalOptions="Center"/>
+                        <Switch IsToggled="{Binding Memo.IsPasswordProtected}"/>
+                    </HorizontalStackLayout>
+                    <Entry Placeholder="비밀번호" IsPassword="True" Text="{Binding Password}" IsVisible="{Binding Memo.IsPasswordProtected}"/>
+                    <Entry Placeholder="비밀번호 힌트" Text="{Binding Memo.PasswordHint}" IsVisible="{Binding Memo.IsPasswordProtected}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="이 메모 숨기기" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding Memo.IsHidden}"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+    

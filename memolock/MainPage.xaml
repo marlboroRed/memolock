@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:memolock.Converters"
+             xmlns:models="clr-namespace:memolock.Models"
+             xmlns:viewmodels="clr-namespace:memolock.ViewModels"
+             x:Class="memolock.Views.MainPage"
+             x:DataType="viewmodels:MainViewModel"
+             Title="MEMO">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToLockIconConverter x:Key="BoolToLockIconConverter" />
+            <converters:BoolToStarIconConverter x:Key="BoolToStarIconConverter" />
+            <converters:BoolToPinIconConverter x:Key="BoolToPinIconConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ToggleFavoritesFilterCommand}" IconImageSource="star_empty.png" />
+        <ToolbarItem Command="{Binding SortCommand}" IconImageSource="sort.png" />
+        <ToolbarItem Command="{Binding GoToSettingsCommand}" IconImageSource="settings.png" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <SearchBar Grid.Row="0"
+                   Placeholder="메모 검색..."
+                   SearchCommand="{Binding SearchCommand}"
+                   Text="{Binding SearchText}" />
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Memos}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Memo">
+                    <Frame Margin="10,5"
+                           BorderColor="LightGray"
+                           CornerRadius="8"
+                           HasShadow="True"
+                           Padding="10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=SelectMemoCommand}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="10">
+                            <Image Grid.Column="0"
+                                   HeightRequest="20"
+                                   Source="{Binding IsPasswordProtected, Converter={StaticResource BoolToLockIconConverter}}"
+                                   VerticalOptions="Center"
+                                   WidthRequest="20" />
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label FontAttributes="Bold" Text="{Binding Title}" />
+                                <Label FontSize="12"
+                                       Text="{Binding CreationDate, StringFormat='{0:yyyy.MM.dd}'}"
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+                            <ImageButton Grid.Column="2"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=ToggleFavoriteCommand}"
+                                         CommandParameter="{Binding .}"
+                                         HeightRequest="30"
+                                         Source="{Binding IsFavorite, Converter={StaticResource BoolToStarIconConverter}}"
+                                         WidthRequest="30" />
+                            <ImageButton Grid.Column="3"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=TogglePinCommand}"
+                                         CommandParameter="{Binding .}"
+                                         HeightRequest="30"
+                                         Source="{Binding IsPinned, Converter={StaticResource BoolToPinIconConverter}}"
+                                         WidthRequest="30" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ImageButton Grid.Row="1"
+                     Margin="20"
+                     Aspect="Center"
+                     BackgroundColor="DodgerBlue"
+                     Command="{Binding CreateMemoCommand}"
+                     CornerRadius="28"
+                     HeightRequest="56"
+                     HorizontalOptions="End"
+                     Padding="15"
+                     Source="add.png"
+                     VerticalOptions="End"
+                     WidthRequest="56" />
+
+        <BoxView Grid.Row="2"
+                 Color="LightGray"
+                 HeightRequest="50" />
+        <Label Grid.Row="2"
+               HorizontalOptions="Center"
+               Text="AdMob Banner"
+               TextColor="Black"
+               VerticalOptions="Center" />
+    </Grid>
+</ContentPage>
